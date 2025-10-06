@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
         $battles  = Battle::factory(3)->create();
-        $memes = Meme::factory(20)->create(['battle_id'=> $battles->random()->id]);
+        $memes = Meme::factory(20)->create();
         $users = User::factory(5)->create();
         $votes = Vote::factory(5)->create();
     }

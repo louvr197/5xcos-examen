@@ -14,16 +14,17 @@ return new class extends Migration
         Schema::create('votes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-           // ✅ Fix: Use foreignId() to create the column and constraint simultaneously.
+            $table->float('score');
+
             $table->foreignId('meme_id')
-                  ->constrained() // Assumes table 'memes' and column 'id'
+                  ->constrained()
                   ->onDelete('cascade');
 
             $table->foreignId('user_id')
-                  ->constrained() // Assumes table 'users' and column 'id'
+                  ->constrained()
                   ->onDelete('cascade');
 
-            // Optional but recommended: Add a unique constraint to prevent double-voting
+
             $table->unique(['user_id', 'meme_id']);
         });
     }

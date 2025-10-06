@@ -3,9 +3,11 @@
 namespace Database\Factories;
 
 use App\Models\Battle;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Meme>
  */
@@ -27,7 +29,8 @@ class MemeFactory extends Factory
 
                 return $path;
             },
-            'battle_id'=> Battle::get()->random()->id
+            'battle_id' => Battle::get()->random()->id,
+            'user_id' => User::all()->random()->id
         ];
     }
 }

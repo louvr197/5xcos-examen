@@ -16,6 +16,10 @@ return new class extends Migration
             $table->timestamps();
             $table->string('meme_path');
 
+            $table->foreignId('user_id')
+                  ->constrained()
+                  ->onDelete('cascade');
+                  
             $table->foreignId('battle_id')
                 ->constrained() // Assumes table 'memes' and column 'id'
                 ->onDelete('cascade');

@@ -20,6 +20,7 @@ class VoteFactory extends Factory
     {
         return [
             //
+            'score'=>rand(0,5),
             'user_id' => User::all()->random()->id,
             'meme_id' => Meme::all()->random()->id,
         ];
