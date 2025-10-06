@@ -14,9 +14,21 @@ class Meme extends Model
     public function battle(){
         return $this->belongsTo(Battle::class);
     }
+        public function poster(){
+        return $this->belongsTo(User::class);
+    }
     public function votes(){
         return $this->hasMany(Vote::class);
     }
-    
+
+    public function score(){
+        // dump($this->votes);
+
+        $sum = 0;
+        foreach ($this->votes as $vote)
+            $sum += $vote->score;
+        return count($this->votes)?$sum / count($this->votes):0;
+    }
+
 
 }

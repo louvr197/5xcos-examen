@@ -9,7 +9,7 @@ class Vote extends Model
 {
     /** @use HasFactory<\Database\Factories\VoteFactory> */
     use HasFactory;
-    protected $fillable = ['score'];
+    protected $fillable = ['score','meme_id','user_id'];
 
     public function voter(){
         return $this->belongsTo(User::class);
