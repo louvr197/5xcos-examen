@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Meme;
 use App\Models\User;
 use App\Models\Vote;
 use Illuminate\Auth\Access\Response;
@@ -27,17 +28,17 @@ class VotePolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user,Meme $meme): bool
     {
-        return true;
+        return $meme->battle->limit_date > now();;
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Vote $vote): bool
+    public function update(User $user,Meme $meme, Vote $vote): bool
     {
-        return $user->id === $vote->user_id;
+        return $user->id === $vote->user_id && $vote->meme->battle->limit_date > now();
     }
 
     /**
@@ -45,7 +46,7 @@ class VotePolicy
      */
     public function delete(User $user, Vote $vote): bool
     {
-        return false;
+        return $vote->meme()->battle()->limit_date > now();
     }
 
     /**

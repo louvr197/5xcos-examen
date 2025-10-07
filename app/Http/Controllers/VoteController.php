@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Vote;
 use App\Http\Requests\StoreVoteRequest;
 use App\Http\Requests\UpdateVoteRequest;
+use App\Models\Meme;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 
 class VoteController extends Controller
@@ -29,8 +32,16 @@ class VoteController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function store(StoreVoteRequest $request)
+    public function store(StoreVoteRequest $request, Meme $meme)
     {
+        try {
+            Gate::authorize('create', [Vote::class, $meme]);
+
+        } catch (AuthorizationException $e) {
+            try {Gate::authorize('update', [Vote::class, $meme]);}
+            catch (AuthorizationException $e){
+            return redirect()->back()->with('error', 'Action non autorisée ou battle close.');
+        }}
         $validated = $request->validated();
 
         $userId = auth()->id();

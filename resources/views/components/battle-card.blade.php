@@ -12,6 +12,9 @@
         </div>
         <div class="text-xs text-gray-500">
             {{ $battle->limit_date }}
+            @if($battle->limit_date >= now()) En cours
+            @else cloturée
+            @endif
         </div>
     </a>
 </div>

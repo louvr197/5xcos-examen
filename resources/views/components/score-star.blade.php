@@ -14,7 +14,7 @@
 <div class="star-rating flex items-center" title="Moyenne: {{ number_format($displayScore, 1) }} / 5">
 
     {{-- Le formulaire enveloppe TOUS les boutons, rendant tout le widget votable --}}
-    <form method="POST" action="{{ route('votes.store') }}" class="rating-form flex items-center">
+    <form method="POST" action="{{ route('votes.store',$meme) }}" class="rating-form flex items-center">
         @csrf
         <input type="hidden" name="meme_id" value="{{ $meme->id }}">
 
@@ -33,13 +33,14 @@
             @endphp
 
             <button
+            @if(!$meme->battle->is_open()) disabled @endif
                 type="submit"
                 name="score"
                 value="{{ $score }}"
                 class="star-btn p-1 focus:outline-none bg-transparent border-none cursor-pointer"
                 title="Donner la note de {{ $score }}"
             >
-                {{-- L'icône affichée est toujours l'icône pleine (solid) ou l'outline. --}}
+
                 @if ($isFilled)
                     <x-heroicon-s-star class="w-6 h-6 fill-current {{ $iconClass }}" style="display: block;" />
                 @else

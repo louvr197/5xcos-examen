@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BattleController;
+use App\Http\Controllers\MemeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VoteController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,8 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/',[BattleController::class,'index']);
 Route::get('/battles/{battle}', [BattleController::class, 'show'])->name('front.battles.show');
-Route::post('/votes', [VoteController::class, 'store'])->name('votes.store')->middleware('auth');
+Route::post('/meme/{meme}', [VoteController::class, 'store'])->name('votes.store')->middleware('auth');
+
+Route::post('/battles/{battle}/upload', [MemeController::class, 'store'])->name('memes.store')->middleware('auth');
 
 require __DIR__ . '/auth.php';
