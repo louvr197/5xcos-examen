@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Battle;
 use App\Models\Meme;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -27,9 +28,9 @@ class MemePolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user, Battle $battle): bool
     {
-        return false;
+        return $battle->limit_date >= now();
     }
 
     /**
@@ -37,7 +38,7 @@ class MemePolicy
      */
     public function update(User $user, Meme $meme): bool
     {
-        return false;
+        return  $user->id === $meme->user_id && $meme->battle->limit_date >= now();
     }
 
     /**
@@ -45,7 +46,7 @@ class MemePolicy
      */
     public function delete(User $user, Meme $meme): bool
     {
-        return false;
+        return $user->id === $meme->user_id && $meme->battle->limit_date >= now();
     }
 
     /**

@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Meme;
 use App\Http\Requests\StoreMemeRequest;
 use App\Http\Requests\UpdateMemeRequest;
+use App\Models\Battle;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Redirect;
 
 class MemeController extends Controller
 {
@@ -27,9 +31,25 @@ class MemeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMemeRequest $request)
+    public function store(StoreMemeRequest $request, Battle $battle)
     {
         //
+        dump($battle);
+        Gate::authorize('create', [Meme::class, $battle]);
+
+        $meme = Meme::make();
+        $meme->user_id = Auth::id();
+        $meme->battle_id = $battle->id;
+        $validated = $request->validated();
+        if ($request->hasFile('meme_path')) {
+            $path = $request->file('meme_path')->store('memes', 'public');
+            $meme->meme_path = $path;
+        } else {
+            return back()->withErrors(['error' => "Aucune image envoyée."]);
+        }
+        $meme->save();
+
+        return redirect()->route('front.battles.show', $battle)->with('success', 'Mème ajouté avec succès !');
     }
 
     /**

@@ -22,6 +22,13 @@ class Battle extends Model
     }
     public function winner()
     {
-        return $this->memes()->first();
+        return $this->memes->sortByDesc(function ($meme) {
+            return $meme->score();
+        })->first();
+    }
+
+    public function is_open()
+    {
+        return $this->limit_date >= now();
     }
 }

@@ -37,7 +37,7 @@ class BattlePolicy
      */
     public function update(User $user, Battle $battle): bool
     {
-        return false;
+        return $user->id === $battle->user_id && $battle->limit_date > now();
     }
 
     /**
@@ -45,7 +45,7 @@ class BattlePolicy
      */
     public function delete(User $user, Battle $battle): bool
     {
-        return false;
+        return $user->id === $battle->user_id && $battle->limit_date > now();
     }
 
     /**

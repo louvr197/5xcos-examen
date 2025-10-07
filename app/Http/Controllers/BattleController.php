@@ -47,6 +47,7 @@ class BattleController extends Controller
         $memes = $battle->memes;
         // dump("memes ",$memes);
         return view('front.battles.show', [
+            'battle'=>$battle,
             'memes' => $memes,
         ]);
 
