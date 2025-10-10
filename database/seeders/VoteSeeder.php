@@ -14,6 +14,26 @@ class VoteSeeder extends Seeder
     public function run(): void
     {
         //
-        Vote::factory(20)->create();
+        $users = \App\Models\User::all();
+        $memes = \App\Models\Meme::all();
+
+        $pairs = [];
+        // Generate up to 20 unique (user_id, meme_id) pairs
+        while (count($pairs) < 20) {
+            $userId = $users->random()->id;
+            $memeId = $memes->random()->id;
+            $key = $userId . '-' . $memeId;
+            if (!isset($pairs[$key])) {
+                $pairs[$key] = ['user_id' => $userId, 'meme_id' => $memeId];
+            }
+        }
+
+        foreach ($pairs as $pair) {
+            \App\Models\Vote::create([
+                'score' => rand(0, 5),
+                'user_id' => $pair['user_id'],
+                'meme_id' => $pair['meme_id'],
+            ]);
+        }
     }
 }
