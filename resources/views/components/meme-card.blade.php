@@ -1,6 +1,6 @@
 <div>
     <a class="flex flex-col h-full space-y-4 bg-white rounded-md shadow-md p-5 w-full hover:shadow-lg hover:scale-105 transition"
-        href="{{ route('front.battles.show', $meme) }}">
+        href="{{ route('front.memes.show', $meme) }}">
         <figure>
             <img src="{{ asset('storage/' . $meme->meme_path) }}" alt="{{ asset('storage/' . $meme->meme_path) }}">
         </figure>

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Meme;
 use App\Models\Battle;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreBattleRequest;
 use App\Http\Requests\UpdateBattleRequest;
 
@@ -14,11 +17,25 @@ class BattleController extends Controller
     public function index()
     {
         //
-        $battles = Battle::paginate(12);
-        return view('front.battles.index', [
-            'battles' => $battles,
-        ]);
+           $query = Battle::query();
 
+    // Filter by status (open/closed)
+    if (request('status') === 'open') {
+        $query->where('limit_date', '>=', now());
+    } elseif (request('status') === 'closed') {
+        $query->where('limit_date', '<', now());
+    }
+
+    // Filter by title search
+    if ($search = request('search')) {
+        $query->where('title', 'like', '%' . $search . '%');
+    }
+
+    $battles = $query->orderBy('limit_date', 'desc')->paginate(12);
+
+    return view('front.battles.index', [
+        'battles' => $battles,
+    ]);
     }
 
     /**
@@ -27,6 +44,7 @@ class BattleController extends Controller
     public function create()
     {
         //
+        return view('front.battles.create');
     }
 
     /**
@@ -35,6 +53,15 @@ class BattleController extends Controller
     public function store(StoreBattleRequest $request)
     {
         //
+        Gate::authorize('create',Battle::class);
+        $validated = $request->validated();
+        $battle = Battle::make();
+        $battle->title = $validated['title'];
+        $battle->description = $validated['description'];
+        $battle->limit_date = $validated['limit_date'];
+        $battle->user_id = Auth::id();
+        $battle->save();
+        return redirect()->route('front.battles.show', $battle)->with('success', 'Battle créée avec succès !');
     }
 
     /**
@@ -44,13 +71,13 @@ class BattleController extends Controller
     {
         //
         // dump("battle id",$battle->id);
-        $memes = $battle->memes;
+        // $memes = $battle->memes;
+        $memes = Meme::where('battle_id', $battle->id)->paginate(6);
         // dump("memes ",$memes);
         return view('front.battles.show', [
-            'battle'=>$battle,
+            'battle' => $battle,
             'memes' => $memes,
         ]);
-
     }
 
     /**
@@ -67,6 +94,7 @@ class BattleController extends Controller
     public function update(UpdateBattleRequest $request, Battle $battle)
     {
         //
+
     }
 
     /**

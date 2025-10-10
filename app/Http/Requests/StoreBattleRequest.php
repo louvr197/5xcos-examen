@@ -11,7 +11,7 @@ class StoreBattleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->check();;
     }
 
     /**
@@ -23,6 +23,9 @@ class StoreBattleRequest extends FormRequest
     {
         return [
             //
+            'title' => 'required|unique:battles|max:255',
+            'limit_date' => 'required|date',
+            'description' => 'required|max:1000',
         ];
     }
 }

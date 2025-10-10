@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Meme;
-use App\Http\Requests\StoreMemeRequest;
-use App\Http\Requests\UpdateMemeRequest;
 use App\Models\Battle;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\StoreMemeRequest;
+use App\Http\Requests\UpdateMemeRequest;
 use Illuminate\Support\Facades\Redirect;
 
 class MemeController extends Controller
@@ -34,7 +34,7 @@ class MemeController extends Controller
     public function store(StoreMemeRequest $request, Battle $battle)
     {
         //
-        dump($battle);
+        // dump($battle);
         Gate::authorize('create', [Meme::class, $battle]);
 
         $meme = Meme::make();
@@ -58,6 +58,9 @@ class MemeController extends Controller
     public function show(Meme $meme)
     {
         //
+        return view('front.memes.show', [
+            'meme' => $meme,
+        ]);
     }
 
     /**

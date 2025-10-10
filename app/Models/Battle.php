@@ -23,7 +23,7 @@ class Battle extends Model
     public function winner()
     {
         return $this->memes->sortByDesc(function ($meme) {
-            return $meme->score();
+            return [$meme->score(), $meme->votes->count()];
         })->first();
     }
 
