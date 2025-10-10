@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateVoteRequest;
 use App\Models\Meme;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class VoteController extends Controller
@@ -44,7 +45,7 @@ class VoteController extends Controller
         }}
         $validated = $request->validated();
 
-        $userId = auth()->id();
+        $userId = Auth::id();
 
         Vote::updateOrCreate(
             [

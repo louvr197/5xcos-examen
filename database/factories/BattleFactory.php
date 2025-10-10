@@ -20,7 +20,7 @@ class BattleFactory extends Factory
         return [
             'title'=>fake()->bs(),
             'description'=>fake()->realTextBetween(),
-            'limit_date'=>fake()->dateTimeBetween('-1 week','+1 week'),
+            'limit_date'=>fake()->dateTimeBetween('-1 week','+2 week'),
             'user_id' => User::all()->random()->id
         ];
     }
