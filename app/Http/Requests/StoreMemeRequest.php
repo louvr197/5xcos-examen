@@ -23,6 +23,7 @@ class StoreMemeRequest extends FormRequest
     {
         return [
             //
+            'meme_path' => ['required', 'image', 'max:2048'], // max 2MB
         ];
     }
 }
