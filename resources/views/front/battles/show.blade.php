@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="max-w-5xl mx-auto">
         <div class="bg-white rounded shadow p-8 mb-8 grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
-            <h1 class="font-bold text-3xl mb-2 text-blue-700 col-span-4">{{ $battle->title }}</h1>
+            <h1 class="font-bold text-3xl mb-2 text-blue-700 col-span-3">{{ $battle->title }}</h1>
             <div class="md:col-span-2">
 
                 <p class="mb-4 text-gray-700 text-base">{{ $battle->description }}</p>
@@ -24,7 +24,7 @@
         </div>
 
         <h2 class="font-bold text-xl mb-6 text-blue-600">Mèmes en compétition</h2>
-        <ul class="grid sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8">
+        <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             @forelse ($memes as $meme)
                 <li>
                     <x-meme-card :meme="$meme" />
