@@ -1,8 +1,9 @@
 <x-app-layout>
     <div class="max-w-5xl mx-auto">
         <div class="bg-white rounded shadow p-8 mb-8 grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+            <h1 class="font-bold text-3xl mb-2 text-blue-700 col-span-4">{{ $battle->title }}</h1>
             <div class="md:col-span-2">
-                <h1 class="font-bold text-3xl mb-2 text-blue-700">{{ $battle->title }}</h1>
+
                 <p class="mb-4 text-gray-700 text-base">{{ $battle->description }}</p>
                 <p class="text-xs text-gray-400 mb-4">
                     {{-- Limite : {{ $battle->str_limit_date() }} --}}
@@ -15,7 +16,7 @@
             </div>
 
             @if ($battle->limit_date >= now())
-                <div>
+                <div class="bg-slate-200 p-2 rounded">
                     <h2 class="font-bold text-lg mb-4 text-blue-600">Ajouter un mème</h2>
                     <x-meme-upload-field :battle="$battle" />
                 </div>

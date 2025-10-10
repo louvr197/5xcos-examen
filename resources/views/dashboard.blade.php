@@ -9,8 +9,11 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
+                    {{ __("Tu es connecté") }}
                 </div>
+                <div class='p-6'>
+                    <a href="{{ route('front.battles.index')}}" class="text-blue-600 hover:underline">
+                        Allez voir les battles</a></div>
             </div>
         </div>
     </div>

@@ -22,13 +22,15 @@
         <div class="flex-grow text-gray-700 text-sm text-justify">
             {{ Str::limit($battle->description, 120) }}
         </div>
-        <div class="text-xs text-gray-500">
-            {{ $battle->limit_date }}
-            @if ($battle->limit_date >= now())
-                En cours
-            @else
-                cloturée
-            @endif
+        <div class="text-xs text-gray-500 flex justify-between">
+            <div>{{ $battle->limit_date }}</div>
+            <div>
+                @if ($battle->limit_date >= now())
+                    <span class="inline-block bg-green-100 text-green-800 px-3 py-1 rounded mb-4">Battle en cours</span>
+                @else
+                    <span class="inline-block bg-red-100 text-red-800 px-3 py-1 rounded mb-4">Battle clôturée</span>
+                @endif
+            </div>
         </div>
     </a>
 </div>
