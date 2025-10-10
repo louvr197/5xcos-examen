@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreMemeRequest;
 use App\Http\Requests\UpdateMemeRequest;
-use Illuminate\Support\Facades\Redirect;
 
 class MemeController extends Controller
 {
@@ -57,7 +56,6 @@ class MemeController extends Controller
      */
     public function show(Meme $meme)
     {
-        //
         return view('front.memes.show', [
             'meme' => $meme,
         ]);

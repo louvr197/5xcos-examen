@@ -17,25 +17,25 @@ class BattleController extends Controller
     public function index()
     {
         //
-           $query = Battle::query();
+        $query = Battle::query();
 
-    // Filter by status (open/closed)
-    if (request('status') === 'open') {
-        $query->where('limit_date', '>=', now());
-    } elseif (request('status') === 'closed') {
-        $query->where('limit_date', '<', now());
-    }
+        // Filter by status (open/closed)
+        if (request('status') === 'open') {
+            $query->where('limit_date', '>=', now());
+        } elseif (request('status') === 'closed') {
+            $query->where('limit_date', '<', now());
+        }
 
-    // Filter by title search
-    if ($search = request('search')) {
-        $query->where('title', 'like', '%' . $search . '%');
-    }
+        // Filter by title search
+        if ($search = request('search')) {
+            $query->where('title', 'like', '%' . $search . '%');
+        }
 
-    $battles = $query->orderBy('limit_date', 'desc')->paginate(12);
+        $battles = $query->orderBy('limit_date', 'desc')->paginate(12);
 
-    return view('front.battles.index', [
-        'battles' => $battles,
-    ]);
+        return view('front.battles.index', [
+            'battles' => $battles,
+        ]);
     }
 
     /**
@@ -53,7 +53,7 @@ class BattleController extends Controller
     public function store(StoreBattleRequest $request)
     {
         //
-        Gate::authorize('create',Battle::class);
+        Gate::authorize('create', Battle::class);
         $validated = $request->validated();
         $battle = Battle::make();
         $battle->title = $validated['title'];

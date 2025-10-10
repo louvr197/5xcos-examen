@@ -9,26 +9,28 @@ class Meme extends Model
 {
     /** @use HasFactory<\Database\Factories\MemeFactory> */
     use HasFactory;
-    protected $fillable = ['meme_path'];
+    protected $fillable = ['meme_path', 'battle_id', 'user_id'];
 
-    public function battle(){
+    public function battle()
+    {
         return $this->belongsTo(Battle::class);
     }
-        public function poster(){
-        return $this->belongsTo(User::class);
+    public function poster()
+    {
+        return $this->belongsTo(User::class,'user_id');
     }
-    public function votes(){
+    public function votes()
+    {
         return $this->hasMany(Vote::class);
     }
 
-    public function score(){
+    public function score()
+    {
         // dump($this->votes);
 
         $sum = 0;
         foreach ($this->votes as $vote)
             $sum += $vote->score;
-        return count($this->votes)?$sum / count($this->votes):0;
+        return count($this->votes) ? $sum / count($this->votes) : 0;
     }
-
-
 }
